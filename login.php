@@ -1,15 +1,16 @@
-<?php include('db.php');?>
+
 <!DOCTYPE html>
 <html class="h-full bg-gray-50">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <title>Login</title>
-</head>
-
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <title>Login</title>
+    </head>
+    
 <body class="h-full flex flex-col justify-center dark:bg-gray-800">
+<?php include('db.php');?>
 <section class="bg-white dark:bg-gray-900">
     <div class="container px-6 py-12 mx-auto lg:py-16">
         <div class="lg:flex">
@@ -22,7 +23,7 @@
             </div>
 
             <div class="mt-8 lg:w-1/2 lg:mt-0">
-                <form class="w-full lg:max-w-xl">
+                <form class="w-full lg:max-w-xl" method="POST" action="db.php">
                     <div class="relative flex items-center">
                         <span class="absolute">
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mx-3 text-gray-300 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -30,7 +31,7 @@
                             </svg>
                         </span>
 
-                        <input type="email" class="block w-full py-3 text-gray-700 bg-white border rounded-md px-11 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" placeholder="Email address">
+                        <input type="email" name="email" class="block w-full py-3 text-gray-700 bg-white border rounded-md px-11 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" placeholder="Email address">
                     </div>
 
                     <div class="relative flex items-center mt-4">
@@ -40,11 +41,11 @@
                             </svg>
                         </span>
 
-                        <input type="password" class="block w-full px-10 py-3 text-gray-700 bg-white border rounded-md dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" placeholder="Password">
+                        <input type="password" name="pass" class="block w-full px-10 py-3 text-gray-700 bg-white border rounded-md dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" placeholder="Password">
                     </div>
 
                     <div class="mt-8 md:flex md:items-center">
-                        <button class="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-md md:w-1/2 hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+                        <button type="submit" name="login" class="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-md md:w-1/2 hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
                             Sign in
                         </button>
 

@@ -1,0 +1,1 @@
+Parents info -> students info [PRN, Name, Email, Phone, Institute, Year, Section]

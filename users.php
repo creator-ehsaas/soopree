@@ -12,7 +12,7 @@ include('db.php');
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
 
-    <title>Dashboard</title>
+    <title>Users</title>
 </head>
 <body class="h-full">
 
@@ -61,18 +61,56 @@ include('db.php');
               </tr>
             </thead>
             <tbody class="bg-white">
-              <tr>
-                <td class="whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">Lindsay Walton</td>
-                <td class="whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">Lindsay Walton</td>
-                <td class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500 hidden lg:table-cell">21070588880</td>
-                <td class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500 hidden lg:table-cell">2021-2025</td>
-                <td class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500 hidden lg:table-cell">lindsay.walton@example.com</td>
-                <td class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500">7897897890</td>
-                <td class="relative whitespace-nowrap border-b border-gray-200 py-4 pr-4 pl-3 text-left  text-sm font-medium sm:pr-6 lg:pr-8">
-                    <a href="edit_user.php" class="text-yellow-600 hover:text-yellow-900 mr-3">Edit</a>
-                    <a href="#" class="text-red-600 hover:text-red-900">Delete</a>
-                </td>
-              </tr>
+            <?php
+    // $user_id = $_SESSION['id'];
+    $m4 = "Select * from users";
+    $requests = mysqli_query($conn, $m4);
+    $num_req = mysqli_num_rows($requests);
+    // $requests = mysqli_fetch_assoc($j7)
+    if($num_req>0){
+      foreach ($requests as $req) {
+        echo '<tr>
+        <td class="whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">'.$req["fname"].' '.$req["lname"].'</td>
+        <td class="whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">'.$req["stdFname"].' '.$req["stdLname"].'</td>
+        <td class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500 hidden lg:table-cell">'.$req["prn"].'</td>
+        <td class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500 hidden lg:table-cell">'.$req["batch"].'</td>
+        <td class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500 hidden lg:table-cell">'.$req["email"].'</td>
+        <td class="whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500">'.$req["phone"].'</td>
+        <td class="relative whitespace-nowrap border-b border-gray-200 py-4 pr-4 pl-3 text-left  text-sm font-medium sm:pr-6 lg:pr-8">
+            <a href="edit_user.php" class="text-yellow-600 hover:text-yellow-900 mr-3">Edit</a>
+            <a href="users.php?del='.$req["id"].'" class="text-red-600 hover:text-red-900">Delete</a>
+        </td>
+      </tr>';
+
+            
+
+      }
+      if(isset($_GET["del"])){
+        // delete request
+        $id = $_GET["del"];
+        $sql = "DELETE FROM users WHERE id=".$id;
+        $delReq = mysqli_query($conn, $sql);
+
+        if ($conn->query($sql) === TRUE) {
+          ?>
+          <script>
+            // redirect to index.php
+            window.location.href = "users.php";
+          </script>
+          <?php
+        } else {
+          ?><script> alert("Error deleting record: " . $conn->error);</script><?php
+        }
+
+      }
+    }else{
+      echo '
+      <div class="rounded-md bg-gray-50 px-6 py-5 sm:flex sm:items-start justify-center">
+                <span class="text-gray-700 font-medium">No Users</span>
+      </div>
+      ';
+    }
+      ?>
 
               <!-- More people... -->
             </tbody>

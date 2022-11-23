@@ -12,7 +12,7 @@ include('db.php');
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <link href="https://unpkg.com/@tailwindcss/forms@0.2.1/dist/forms.min.css" rel="stylesheet">
-    <title>Dashboard</title>
+    <title>Edit User</title>
 </head>
 <body class="h-full">
 

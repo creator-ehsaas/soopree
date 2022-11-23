@@ -1,6 +1,39 @@
 <?php 
 include('check_auth.php');
 include('db.php');
+
+
+if(isset($_POST['addUser'])){
+    $stdFname = $_POST['stdFname'];
+    $stdLname = $_POST['stdLname'];
+    $stdEmail = $_POST['stdEmail'];
+    $batch = $_POST['batch'];
+    $prn = $_POST['prn'];
+    $addr = $_POST['addr'];
+    $stdPhone = $_POST['stdPhone'];
+    $city = $_POST['city'];
+    $state = $_POST['state'];
+    $postalCode = $_POST['postalCode'];
+    $fname = $_POST['fname'];
+    $lname = $_POST['lname'];
+    $email = $_POST['email'];
+    $phone = $_POST['phone'];
+    $password = $_POST['password'];
+    echo "ready to insert";
+    $sql = "INSERT INTO `users` (`stdFname`, `stdLname`, `stdEmail`, `batch`, `prn`, `addr`, `stdPhone`, `city`, `state`, `postalCode`, `fname`, `lname`, `email`, `pass`, `phone`) VALUES ('$stdFname', '$stdLname', '$stdEmail', '$batch', '$prn', '$addr', '$stdPhone', '$city', '$state', '$postalCode', '$fname', '$lname', '$email', '$password', '$phone')";
+    $addUser = mysqli_query($conn, $sql);
+
+    if ($conn -> query($sql) === TRUE) {
+        ?>
+        <script>
+            // redirect to index.php
+            window.location.href = "users.php";
+        </script>
+        <?php
+    } else {
+        ?><script> alert("Error adding record: " . $conn->error);</script><?php
+    }
+}
 ?>
 <!DOCTYPE html>
 <html class="h-full bg-gray-100">
@@ -12,7 +45,7 @@ include('db.php');
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <link href="https://unpkg.com/@tailwindcss/forms@0.2.1/dist/forms.min.css" rel="stylesheet">
-    <title>Dashboard</title>
+    <title>Add User</title>
 </head>
 <body class="h-full">
 
@@ -41,22 +74,23 @@ include('db.php');
         </div>
         </div>
         <div class="mt-5 md:mt-0 md:col-span-2">
-        <div class="overflow-hidden sm:rounded-md">
+            <form method="POST" accept="add_user.php">
+            <div class="overflow-hidden sm:rounded-md">
             <div class="px-4 py-5 bg-white sm:p-6">
                 <div class="grid grid-cols-6 gap-6">
                 <div class="col-span-6 sm:col-span-3">
                     <label for="firstname" class="block text-sm font-medium text-gray-700">First name</label>
-                    <input type="text" name="firstname" id="firstname" autocomplete="given-name" class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                    <input type="text" name="stdFname" id="firstname" autocomplete="given-name" class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                 </div>
 
                 <div class="col-span-6 sm:col-span-3">
                     <label for="lastname" class="block text-sm font-medium text-gray-700">Last name</label>
-                    <input type="text" name="lastname" id="lastname" autocomplete="family-name" class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                    <input type="text" name="stdLname" id="lastname" autocomplete="family-name" class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                 </div>
 
                 <div class="col-span-6 sm:col-span-3">
                     <label for="email" class="block text-sm font-medium text-gray-700">Email address</label>
-                    <input type="text" name="email" id="email" autocomplete="email" class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                    <input type="text" name="stdEmail" id="email" autocomplete="email" class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                 </div>
                 <div class="col-span-6 sm:col-span-1">
                     <label for="batch" class="block text-sm font-medium text-gray-700">Batch</label>
@@ -70,12 +104,12 @@ include('db.php');
 
                 <div class="col-span-6 sm:col-span-4">
                     <label for="address" class="block text-sm font-medium text-gray-700">Street address</label>
-                    <input type="text" name="address" id="address" autocomplete="address" class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                    <input type="text" name="addr" id="address" autocomplete="address" class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                 </div>
 
                 <div class="col-span-6 sm:col-span-2">
                     <label for="phone" class="block text-sm font-medium text-gray-700">Phone no</label>
-                    <input type="text" name="phone" id="phone" autocomplete="phone" class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                    <input type="text" name="stdPhone" id="phone" autocomplete="phone" class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                 </div>
 
                 <div class="col-span-6 sm:col-span-6 lg:col-span-2">
@@ -90,7 +124,7 @@ include('db.php');
 
                 <div class="col-span-6 sm:col-span-3 lg:col-span-2">
                     <label for="postal_code" class="block text-sm font-medium text-gray-700">ZIP / Postal code</label>
-                    <input type="text" name="postal_code" id="postal_code" autocomplete="postal_code" class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                    <input type="text" name="postalCode" id="postal_code" autocomplete="postal_code" class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                 </div>
                 </div>
             </div>
@@ -118,42 +152,22 @@ include('db.php');
                 <div class="grid grid-cols-6 gap-6">
                 <div class="col-span-6 sm:col-span-3">
                     <label for="p_firstname" class="block text-sm font-medium text-gray-700">First name</label>
-                    <input type="text" name="p_firstname" id="p_firstname" autocomplete="given-name" class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                    <input type="text" name="fname" id="p_firstname" autocomplete="given-name" class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                 </div>
 
                 <div class="col-span-6 sm:col-span-3">
                     <label for="p_lastname" class="block text-sm font-medium text-gray-700">Last name</label>
-                    <input type="text" name="p_lastname" id="p_lastname" autocomplete="family-name" class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                    <input type="text" name="lname" id="p_lastname" autocomplete="family-name" class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                 </div>
 
-                <div class="col-span-6">
+                <div class="col-span-4">
                     <label for="p_email" class="block text-sm font-medium text-gray-700">Email address</label>
-                    <input type="text" name="p_email" id="p_email" autocomplete="email" class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                </div>
-
-                <div class="col-span-6 sm:col-span-4">
-                    <label for="p_address" class="block text-sm font-medium text-gray-700">Street address</label>
-                    <input type="text" name="p_address" id="p_address" autocomplete="address" class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                    <input type="text" name="email" id="p_email" autocomplete="email" class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                 </div>
 
                 <div class="col-span-6 sm:col-span-2">
                     <label for="p_phone" class="block text-sm font-medium text-gray-700">Phone no</label>
-                    <input type="text" name="p_phone" id="p_phone" autocomplete="phone" class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                </div>
-
-                <div class="col-span-6 sm:col-span-6 lg:col-span-2">
-                    <label for="p_city" class="block text-sm font-medium text-gray-700">City</label>
-                    <input type="text" name="p_city" id="p_city" autocomplete="address-level2" class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                </div>
-
-                <div class="col-span-6 sm:col-span-3 lg:col-span-2">
-                    <label for="p_state" class="block text-sm font-medium text-gray-700">State / Province</label>
-                    <input type="text" name="p_state" id="p_state" autocomplete="address-level1" class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                </div>
-
-                <div class="col-span-6 sm:col-span-3 lg:col-span-2">
-                    <label for="p_postal_code" class="block text-sm font-medium text-gray-700">ZIP / Postal code</label>
-                    <input type="text" name="p_postal_code" id="p_postal_code" autocomplete="postal_code" class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                    <input type="text" name="phone" id="p_phone" autocomplete="phone" class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                 </div>
                 </div>
             </div>
@@ -183,20 +197,17 @@ include('db.php');
                         <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
                         <input type="password" name="password" id="password" autocomplete="none" class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                     </div>
-
-                    <div class="col-span-6 sm:col-span-3">
-                        <label for="c_password" class="block text-sm font-medium text-gray-700">Confirm Password</label>
-                        <input type="password" name="c_password" id="c_password" autocomplete="none" class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                    </div>
                 </div>
                 </div>
                 <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
-                    <button type="submit" class="inline-flex justify-center py-2 px-8 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">ADD</button>
+                    <button type="submit" name="addUser" class="inline-flex justify-center py-2 px-8 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">ADD</button>
                 </div>
                 </div>
             </div>
         </div>
     </div>
+</form>
+
 </div>
 </div>
 </div>

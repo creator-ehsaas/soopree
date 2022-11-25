@@ -49,13 +49,13 @@ if(isset($_POST['raise'])){
 <div class="bg-white mb-8 shadow px-4 py-5 sm:rounded-lg sm:p-6">
     <div class="">
       <div class="mt-5 md:mt-0 md:col-span-2">
-        <form action="raiseReq.php" method="POST">
+        <form id="reqForm" action="raiseReq.php" method="POST">
           <div class="grid grid-cols-6 gap-6">
             <div class="col-span-6 sm:col-span-4">
               <label for="reqSub" class="block text-sm font-medium text-gray-700">Request Subject</label>
               <input type="text" name="reqSub" id="reqSub" autocomplete="given-name" class="mt-1 py-3 px-5 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 border rounded-md" required>
             </div>
-
+            <input type="hidden" name="raise" value="true">
 
 
             <div class="col-span-6 sm:col-span-2">
@@ -79,23 +79,20 @@ if(isset($_POST['raise'])){
     <button type="button" class="py-3 px-4 inline-flex flex-shrink-0 justify-center items-center gap-2 rounded-r-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:z-10 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all text-sm">
       Verify
     </button>
+    <span class="text-green-500 hidden" id="msgsnt">Message Sent !</span>
   </div>
   <div id="recaptcha-container" class="mt-4"></div>
               <div id="verify" style="display: none;" class="m-2">
                 <label for="otp" class="block text-sm font-medium text-gray-700"> OTP </label>
                 <div class="mt-1">
-                  <input id="verificationCode" name="otp" type="text" autocomplete="off" required class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                  <input id="verificationCode" name="otp" type="text" autocomplete="off" onkeyup="checkCode()" required class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                 </div>
               </div>
               <div id="btn"></div><div>
               <button type="submit" id="otp" class="mt-4 inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" onclick="sendCode()"><span class="mr-2">Verfiy OTP</span>
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(255, 255, 255, 1);transform:msFilter;"><path d="M11.488 21.754c.294.157.663.156.957-.001 8.012-4.304 8.581-12.713 8.574-15.104a.988.988 0 0 0-.596-.903l-8.05-3.566a1.005 1.005 0 0 0-.813.001L3.566 5.747a.99.99 0 0 0-.592.892c-.034 2.379.445 10.806 8.514 15.115zM8.674 10.293l2.293 2.293 4.293-4.293 1.414 1.414-5.707 5.707-3.707-3.707 1.414-1.414z"></path></svg>
 </button> 
-<button type="submit" id="submit" name="raise" class="hidden mt-4 justify-center inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"><span class="mr-2">Send Request</span>
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
-  <path d="M3.478 2.405a.75.75 0 00-.926.94l2.432 7.905H13.5a.75.75 0 010 1.5H4.984l-2.432 7.905a.75.75 0 00.926.94 60.519 60.519 0 0018.445-8.986.75.75 0 000-1.218A60.517 60.517 0 003.478 2.405z" />
-</svg>
-</button>
+
               </div>
         </form>
         <?php 
@@ -128,6 +125,16 @@ if(isset($_POST['raise'])){
 <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase.js"></script>
 <script src="firebase.js"></script>
 <script>
+  function checkCode(event){
+    var inpOtp = document.getElementById('verificationCode').value;
+    if(inpOtp.length === 6){
+       codeverify();
+      // console.log("OTP Verified");
+    }
+  }
+
+
+
     // Your web app's Firebase configurationdocument.getElementById("btn")
     var firebaseConfig = {
       apiKey: "AIzaSyBo8zTqdzMpARRMGo5Tfo1A2GOgPPrN9gM",

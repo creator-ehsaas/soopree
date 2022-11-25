@@ -17,8 +17,13 @@ function phoneAuth() {
         window.confirmationResult = confirmationResult;
         coderesult = confirmationResult;
         // console.log(coderesult);
-        alert("Message sent");
+        document.getElementById('msgsnt').classList.remove('hidden');
+        setTimeout(function() {
+            document.getElementById('msgsnt').classList.add('hidden');
+
+        }, 3000);
     }).catch(function(error) {
+        console.log(error);
         alert(error.message);
     });
 }
@@ -33,8 +38,12 @@ function codeverify() {
         console.log(user);
         document.getElementById("btn").style.display = "none";
         document.getElementById("verify").style.display = "none";
-        document.getElementById('submit').classList.remove('hidden');
+    
+        document.getElementById('reqForm').submit();
     }).catch(function(error) {
+        console.log(error);
         alert(error.message);
+        return false;
     });
+    return false;
 }

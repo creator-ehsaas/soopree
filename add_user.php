@@ -7,6 +7,7 @@ if(isset($_POST['addUser'])){
     $stdFname = $_POST['stdFname'];
     $stdLname = $_POST['stdLname'];
     $stdEmail = $_POST['stdEmail'];
+    $instituteName = $_POST['instituteName'];
     $batch = $_POST['batch'];
     $prn = $_POST['prn'];
     $addr = $_POST['addr'];
@@ -20,7 +21,7 @@ if(isset($_POST['addUser'])){
     $phone = $_POST['phone'];
     $password = $_POST['password'];
     echo "ready to insert";
-    $sql = "INSERT INTO `users` (`stdFname`, `stdLname`, `stdEmail`, `batch`, `prn`, `addr`, `stdPhone`, `city`, `state`, `postalCode`, `fname`, `lname`, `email`, `pass`, `phone`) VALUES ('$stdFname', '$stdLname', '$stdEmail', '$batch', '$prn', '$addr', '$stdPhone', '$city', '$state', '$postalCode', '$fname', '$lname', '$email', '$password', '$phone')";
+    $sql = "INSERT INTO `users` (`stdFname`, `stdLname`, `stdEmail`, `instituteName`, `batch`, `prn`, `addr`, `stdPhone`, `city`, `state`, `postalCode`, `fname`, `lname`, `email`, `pass`, `phone`) VALUES ('$stdFname', '$stdLname', '$stdEmail','$instituteName', '$batch', '$prn', '$addr', '$stdPhone', '$city', '$state', '$postalCode', '$fname', '$lname', '$email', '$password', '$phone')";
     $addUser = mysqli_query($conn, $sql);
 
     if ($conn -> query($sql) === TRUE) {
@@ -92,6 +93,17 @@ if(isset($_POST['addUser'])){
                     <label for="email" class="block text-sm font-medium text-gray-700">Email address</label>
                     <input type="text" name="stdEmail" id="email" autocomplete="email" class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                 </div>
+
+                <div class="col-span-6 sm:col-span-3">
+                    <label for="instituteName" class="block text-sm font-medium text-gray-700">Institute Name</label>
+                    <select id="instituteName" name="instituteName" autocomplete="instituteName" class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                        <option value="SIT">SIT</option>
+                        <option value="SIBM">SIBM</option>
+                        <option value="SLS">SLS</option>
+                        <option value="SSPAD">SSPAD</option>
+                    </select>
+                </div>
+                
                 <div class="col-span-6 sm:col-span-1">
                     <label for="batch" class="block text-sm font-medium text-gray-700">Batch</label>
                     <input type="text" name="batch" id="batch" autocomplete="batch" class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">

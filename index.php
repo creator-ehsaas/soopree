@@ -34,9 +34,11 @@ include('db.php');
     <?php
     if($_SESSION["isUser"]){
     $user_id = $_SESSION['id'];
-    $m4 = "Select * from requests where user_id=".$user_id;
-    $requests = mysqli_query($conn, $m4);
-    $num_req = mysqli_num_rows($requests);
+    $m4 = "Select * from requests where user_id = ?";
+    $stmt = $conn->prepare($m4);
+    $stmt->bind_param("i", $user_id);
+    $stmt->store_result();
+    $num_req = $stmt->num_rows;
     // $requests = mysqli_fetch_assoc($j7);
     echo $_SESSION["isAdmin"];
     echo $_SESSION["isDean"];
